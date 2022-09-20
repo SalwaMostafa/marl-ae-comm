@@ -859,7 +859,7 @@ class MultiGridEnv(gym.Env):
                   min(top[1] + size[1], self.grid.height))
 
         for _ in range(max_tries):
-            pos = self.np_random.randint(top, bottom)
+            pos = self.np_random.integers(top, bottom)
             if (reject_fn is not None) and reject_fn(pos):
                 continue
             else:
