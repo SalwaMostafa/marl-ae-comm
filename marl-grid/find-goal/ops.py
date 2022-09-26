@@ -8,7 +8,7 @@ import numpy as np
 
 
 def to_torch(x, use_gpu=True, dtype=np.float32):
-    x = np.array(x.detach().cpu().numpy(), dtype=dtype)
+    x = np.array(x.cpu().numpy(), dtype=dtype)
     var = torch.from_numpy(x)
     return var.cuda() if use_gpu is not None else var
 
