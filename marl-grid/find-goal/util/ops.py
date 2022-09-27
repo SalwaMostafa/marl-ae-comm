@@ -27,7 +27,7 @@ def _to_state_var(x, use_gpu=True, dtype=np.float32):
 
 def dict_to_state_var(x, use_gpu=True, dtype=np.float32):
     for k, v in x.items():
-        v = np.array(v.detach().cpu(), dtype=dtype)
+        v = np.array(v, dtype=dtype)
         var = torch.from_numpy(v)
         if k == 'pov':
             var = var.permute(2, 0, 1).unsqueeze(0)
@@ -36,14 +36,14 @@ def dict_to_state_var(x, use_gpu=True, dtype=np.float32):
 
 
 def img_to_state_var(x, use_gpu=True, dtype=np.float32):
-    x = np.array(x.detach().cpu(), dtype=dtype)
+    x = np.array(x, dtype=dtype)
     var = torch.from_numpy(x)
     var = var.permute(2, 0, 1).unsqueeze(0)
     return var.cuda() if use_gpu else var
 
 
 def to_torch(x, use_gpu=True, dtype=np.float32):
-    x = np.array(x.detach().cpu(), dtype=dtype)
+    x = np.array(x, dtype=dtype)
     var = torch.from_numpy(x)
     return var.cuda() if use_gpu else var
 
