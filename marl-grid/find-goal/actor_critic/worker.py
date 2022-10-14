@@ -80,11 +80,14 @@ class Worker(mp.Process):
             target_value: the last time-step value
             done: updated indicator
         """
-        
-        input_dim = [35,35,14]
         env_mask_idx = [None for _ in range(len(self.agents))]
         local_sensory_info = self.env.gen_obs(image_only=True) #list of agents' obs 
         print(local_sensory_info[0])
+        ############################################
+        
+        input_dim = [35,35,14]
+        model = GNNAgent(np.prod(input_dim),input_dim,net_code="2g0f", embedding_size=16, mp_rounds=1)
+        print(model)
         portal_pairs = []
         env = AbsoluteVKBWrapper(self.env,"b3", portal_pairs)
 
