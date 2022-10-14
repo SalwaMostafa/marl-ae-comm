@@ -167,6 +167,7 @@ class Worker(mp.Process):
                                         env_mask_idx=env_mask_idx)[1]
                 if self.num_acts == 1:
                     target_value = [target_value]
+            print(target_value)
 
         #  compute Loss: accumulate rewards and compute gradient
         values = [{k: None for k in self.agents} for _ in range(
@@ -178,6 +179,7 @@ class Worker(mp.Process):
                         zip(*trajectory[aid]))[2]]
                     values[aid][k].append(ops.to_torch(
                         [target_value[aid][k]]))
+                    print(target_value)
                     values[aid][k].reverse()
 
         return trajectory, values, target_value, done
