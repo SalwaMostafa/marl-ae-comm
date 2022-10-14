@@ -16,7 +16,7 @@ from loss import policy_gradient_loss
 from util import ops
 from util.misc import check_done
 from util.decorator import within_cuda_device
-
+from minigrid import *
 
 class Worker(mp.Process):
     """
@@ -80,7 +80,12 @@ class Worker(mp.Process):
         """
         # mask first (environment) actions after an agent is done
         env_mask_idx = [None for _ in range(len(self.agents))]
-
+        
+        env = DirectionWrapper(env)
+        #self.obj_n = np.prod(env.observation_space["image"].shape[:-1])
+        print(env.observation_space["image"])
+        print(env.observation_space["image"].shape[:-1])
+        
         trajectory = [[] for _ in range(self.num_acts)]
 
         while not check_done(done) and len(trajectory[0]) < self.t_max:
