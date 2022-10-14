@@ -17,6 +17,8 @@ from util import ops
 from util.misc import check_done
 from util.decorator import within_cuda_device
 from minigrid import *
+from gnnagent import GNNAgent
+
 
 class Worker(mp.Process):
     """
@@ -78,6 +80,39 @@ class Worker(mp.Process):
             target_value: the last time-step value
             done: updated indicator
         """
+        
+        input_dim = [35,35,14]
+        env_mask_idx = [None for _ in range(len(self.agents))]
+        local_sensory_info = self.env.gen_obs(image_only=True) #list of agents' obs 
+        print(local_sensory_info[0])
+        portal_pairs = []
+        env = AbsoluteVKBWrapper(self.env,"b3", portal_pairs)
+
+        print(self.env.observation_space.spaces)
+        #print(self.env.observation_style['image']) 
+        obs = DirectionWrapper(self.env)
+        print(self.env.observation_space) 
+        print(env)
+        print(obs)
+        print(self.env.width)
+        print(env.agents)
+        print(env.seed(1337))
+
+       
+        print(self.env.observation_space)
+        env = PaddingWrapper(self.env)
+        print(self.env.observation_space) 
+
+
+        #self.obj_n = np.prod(env.observation_space["image"].shape[:-1])
+        print(env.observation_space)
+        #print(env.observation_space["image"].shape[:-1])
+        
+        
+        
+        
+        
+        
         # mask first (environment) actions after an agent is done
         env_mask_idx = [None for _ in range(len(self.agents))]
         
