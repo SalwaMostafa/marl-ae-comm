@@ -2,6 +2,10 @@ from gym import register
 from utill import ind_dict2list, rotate_vec2d, concat_vkb
 import itertools as itt
 from gym_minigrid.minigrid import *
+from collections import namedtuple
+from random import randint
+
+Predicate = namedtuple("Predicate", "name arity")
 
 OBJECTS = ind_dict2list(OBJECT_TO_IDX)
 
