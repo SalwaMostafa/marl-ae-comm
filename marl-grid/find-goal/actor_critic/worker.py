@@ -18,7 +18,7 @@ from util.misc import check_done
 from util.decorator import within_cuda_device
 from minigrid import *
 from gnnagent import GNNAgent
-
+from utilg import *
 
 class Worker(mp.Process):
     """
