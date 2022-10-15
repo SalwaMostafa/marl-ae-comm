@@ -1,4 +1,4 @@
-from agent.geometric.util import batch_to_gd
+from utilg import batch_to_gd
 from torch_geometric.nn import RGCNConv
 import torch
 import torch.nn as nn
