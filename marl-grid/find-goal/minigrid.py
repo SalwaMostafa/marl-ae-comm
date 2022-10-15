@@ -167,27 +167,13 @@ class AbsoluteVKBWrapper(gym.core.ObservationWrapper):
     def __init__(self, env, background_id="b0", with_portals=False):
         super().__init__(env)
 
-        background_id = background_id[:2]
-        if "MiniGrid" in env.unwrapped.spec.id:
-            objs = ["unseen", "empty", "wall", "floor", "ball", "goal", "lava", "agent"]
-            self.attributes = objs
-            self.nullary_predicates = [Predicate("agentRight", 0), Predicate("agentDown", 0),
+       background_id = background_id[:2]
+       objs = ["empty", "wall", "goal","agent"]
+       self.attributes = objs
+       self.nullary_predicates = [Predicate("agentRight", 0), Predicate("agentDown", 0),
                                    Predicate("agentUp", 0), Predicate("agentLeft", 0)]
-            self.env_type = "minigrid"
-        elif env.unwrapped.spec.id=="minatar":
-            self.attributes = env.channels
-            self.env_type = "minatar"
-            self.nullary_predicates = []
-        elif env.unwrapped.spec.id=="rtfm":
-            self.attributes = [f"channel{i}" for i in range(len(env.image_properties))]
-            self.env_type = "rtfm"
-            self.nullary_predicates = []
-        elif env.unwrapped.spec.id=="boxworld":
-            self.attributes = [str(i) for i in range(len(all_colors))]
-            self.env_type = "boxworld"
-            self.nullary_predicates = []
-        else:
-            raise ValueError()
+       self.env_type = "minigrid"
+      
         self.unary_predicates = self.attributes
         self.background_id = background_id
         if background_id in ["b0", "nolocal"]:
