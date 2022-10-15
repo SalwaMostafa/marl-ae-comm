@@ -171,12 +171,12 @@ class AbsoluteVKBWrapper(gym.core.ObservationWrapper):
     def __init__(self, env, background_id="b0", with_portals=False):
         super().__init__(env)
 
-       background_id = background_id[:2]
-       objs = ["empty", "wall", "goal","agent"]
-       self.attributes = objs
-       self.nullary_predicates = [Predicate("agentRight", 0), Predicate("agentDown", 0),
+        background_id = background_id[:2]
+        objs = ["empty", "wall", "goal","agent"]
+        self.attributes = objs
+        self.nullary_predicates = [Predicate("agentRight", 0), Predicate("agentDown", 0),
                                    Predicate("agentUp", 0), Predicate("agentLeft", 0)]
-       self.env_type = "minigrid"
+        self.env_type = "minigrid"
       
         self.unary_predicates = self.attributes
         self.background_id = background_id
