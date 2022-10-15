@@ -435,6 +435,12 @@ class MultiGridEnv(gym.Env):
         pos_space = [gym.spaces.MultiDiscrete(
             [self.width, self.height]) for _ in range(self.num_agents)]
         pos_space = gym.spaces.Tuple(pos_space)
+        image_space = gym.spaces.Box(
+            low=0,
+            high=255,
+            shape=(view_tile_size * view_size, view_tile_size * view_size, 3),
+            dtype='uint8',
+        )
 
         obs_space = self.agents[0].observation_space
         obs_style = self.agents[0].observation_style
@@ -444,6 +450,8 @@ class MultiGridEnv(gym.Env):
                 obs_space.spaces['position'] = pos_space
             if 'selfpos' in obs_space.spaces:
                 obs_space.spaces['selfpos'] = agent_pos_space
+            if 'image' in obs_space.spaces:
+                 obs_space.spaces['image'] = image_space
         return obs_space
 
     @property
