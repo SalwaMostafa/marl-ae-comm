@@ -140,7 +140,7 @@ class GridAgentInterface(GridAgent):
                 obs_space['selfpos'] = gym.spaces.Box(low=0, high=1,
                                                       shape=(2,),
                                                       dtype=np.float32)
-              if self.observe_image:
+            if self.observe_image:
                 # discrete position space is handled in base.py
                 obs_space['image'] = gym.spaces.Box(low=0,high=255,shape=(view_tile_size * view_size, view_tile_size * view_size, 3),dtype='uint8',)
             if self.observe_done:
