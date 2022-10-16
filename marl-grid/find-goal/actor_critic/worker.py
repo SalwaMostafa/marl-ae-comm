@@ -80,50 +80,27 @@ class Worker(mp.Process):
             target_value: the last time-step value
             done: updated indicator
         """
-        env_mask_idx = [None for _ in range(len(self.agents))]
-        local_sensory_info = self.env.gen_obs(image_only=True) #list of agents' obs 
-        print(local_sensory_info[0])
-        ############################################
-        
-        input_dim = [35,35,14]
-        model = GNNAgent(np.prod(input_dim),input_dim,net_code="2g0f", embedding_size=16, mp_rounds=1)
-        print(model)
-        portal_pairs = []
-        env = AbsoluteVKBWrapper(self.env,"b3", portal_pairs)
-
-        print(self.env.observation_space.spaces)
-        #print(self.env.observation_style['image']) 
-        obs = DirectionWrapper(self.env)
-        print(self.env.observation_space) 
-        print(env)
-        print(obs)
-        print(self.env.width)
-        print(env.agents)
-        print(env.seed(1337))
-
-       
-        print(self.env.observation_space)
-        env = PaddingWrapper(self.env)
-        print(self.env.observation_space) 
-
-
-        #self.obj_n = np.prod(env.observation_space["image"].shape[:-1])
-        print(env.observation_space)
-        #print(env.observation_space["image"].shape[:-1])
-        
-        
-        
-        
-        
-        
+      
         # mask first (environment) actions after an agent is done
         env_mask_idx = [None for _ in range(len(self.agents))]
-        
-        env = DirectionWrapper(env)
-        #self.obj_n = np.prod(env.observation_space["image"].shape[:-1])
+        #######################################################################
+        local_sensory_info = self.env.gen_obs(image_only=True) #list of agents' obs 
+        print(local_sensory_info[0])
+        self.env = DirectionWrapper(self.env)
+        self.obj_n = np.prod(env.observation_space["image"].shape[:-1])
         print(env.observation_space["image"])
         print(env.observation_space["image"].shape[:-1])
-        
+        print(self.obj_n)
+        portal_pairs = []
+        self.env = AbsoluteVKBWrapper(self.env,"b3", portal_pairs)
+        print(self.env.portal_pairs)
+        input_dim = self.env.obs_shape 
+        print(input_dim)
+        model = GNNAgent(np.prod(input_dim),input_dim,net_code="2g0f", embedding_size=16, mp_rounds=1)
+        print(model)
+        self.env = PaddingWrapper(self.env)
+        print(self.env.observation_space)        
+        ######################################################################
         trajectory = [[] for _ in range(self.num_acts)]
 
         while not check_done(done) and len(trajectory[0]) < self.t_max:
