@@ -84,6 +84,8 @@ class Worker(mp.Process):
         # mask first (environment) actions after an agent is done
         env_mask_idx = [None for _ in range(len(self.agents))]
         #######################################################################
+        feature = self.env.Obj
+        print("feature = ", feature)
         local_sensory_info = self.env.gen_obs(image_only=True) #list of agents' obs 
         print(local_sensory_info[0])
         self.env = DirectionWrapper(self.env)
@@ -99,7 +101,7 @@ class Worker(mp.Process):
         model = GNNAgent(np.prod(input_dim),input_dim,net_code="2g0f", embedding_size=16, mp_rounds=1)
         print(model)
         self.env = PaddingWrapper(self.env)
-        print(self.env.observation_space)           
+        print(self.env.observation_space)                 
         ######################################################################
         trajectory = [[] for _ in range(self.num_acts)]
 
