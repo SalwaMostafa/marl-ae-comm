@@ -87,19 +87,19 @@ class Worker(mp.Process):
         local_sensory_info = self.env.gen_obs(image_only=True) #list of agents' obs 
         print(local_sensory_info[0])
         self.env = DirectionWrapper(self.env)
-        self.obj_n = np.prod(env.observation_space["image"].shape[:-1])
-        print(env.observation_space["image"])
-        print(env.observation_space["image"].shape[:-1])
+        self.obj_n = np.prod(self.env.observation_space["image"].shape[:-1])
+        print(self.env.observation_space["image"])
+        print(self.env.observation_space["image"].shape[:-1])
         print(self.obj_n)
         portal_pairs = []
         self.env = AbsoluteVKBWrapper(self.env,"b3", portal_pairs)
-        print(self.env.portal_pairs)
+        obs = self.env.img2vkb(local_sensory_info[0])
         input_dim = self.env.obs_shape 
         print(input_dim)
         model = GNNAgent(np.prod(input_dim),input_dim,net_code="2g0f", embedding_size=16, mp_rounds=1)
         print(model)
         self.env = PaddingWrapper(self.env)
-        print(self.env.observation_space)        
+        print(self.env.observation_space)           
         ######################################################################
         trajectory = [[] for _ in range(self.num_acts)]
 
